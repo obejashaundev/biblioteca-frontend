@@ -10,7 +10,10 @@ type Props = {
   inputType: string;
   inputId: string;
   inputName: string;
+  hidden?: boolean | undefined;
+  disabled?: boolean | undefined;
   value: string | number | readonly string[] | undefined;
+  minValue?: string | number | undefined;
   onClick?: MouseEventHandler<HTMLInputElement> | undefined;
   onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
   onFocus?: FocusEventHandler<HTMLInputElement> | undefined;
@@ -24,7 +27,10 @@ export default function FormField({
   inputType,
   inputId,
   inputName,
+  hidden,
+  disabled,
   value,
+  minValue,
   onClick,
   onChange,
   onFocus,
@@ -35,29 +41,45 @@ export default function FormField({
 }: Props) {
   return (
     <>
-      <label
-        htmlFor={inputId}
-        className="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
-      >
+      <div className="relative my-5">
         <input
           type={inputType}
           id={inputId}
           name={inputName}
-          value={value}
+          value={value ? value : minValue}
+          min={minValue}
           onClick={onClick}
-          onChange={onChange}
           onFocus={onFocus}
+          onChange={onChange}
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}
-          className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
-          placeholder={labelText}
           required={isRequired}
+          hidden={hidden}
+          disabled={disabled}
+          placeholder={placeholder}
+          className="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600
+          focus:pt-6
+          focus:pb-2
+          [&:not(:placeholder-shown)]:pt-6
+          [&:not(:placeholder-shown)]:pb-2
+          autofill:pt-6
+          autofill:pb-2"
         />
-
-        <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+        <label
+          htmlFor={inputId}
+          className="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] dark:text-white peer-disabled:opacity-50 peer-disabled:pointer-events-none
+      peer-focus:scale-90
+      peer-focus:translate-x-0.5
+      peer-focus:-translate-y-1.5
+      peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
+      peer-[:not(:placeholder-shown)]:scale-90
+      peer-[:not(:placeholder-shown)]:translate-x-0.5
+      peer-[:not(:placeholder-shown)]:-translate-y-1.5
+      peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500 dark:text-neutral-500"
+        >
           {labelText}
-        </span>
-      </label>
+        </label>
+      </div>
     </>
   );
 }

@@ -1,15 +1,18 @@
 /** @type {import('tailwindcss').Config} */
-import forms from "@tailwindcss/forms";
+// import forms from "@tailwindcss/forms";
+import preline from 'preline/plugin'
 export default {
   content: [
-    "./index.html",
+    // "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    'node_modules/preline/dist/*.js',
   ],
   theme: {
     extend: {},
   },
   plugins: [
-    forms,
+    // forms,
+    preline
   ],
 }
 

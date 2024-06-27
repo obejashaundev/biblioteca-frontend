@@ -11,9 +11,9 @@ export default function Home() {
             </h3>
 
             <p className="mt-1 text-xs font-medium text-gray-600">
-              By Obed Peralta
+              By Obed Peralta&nbsp;
               <a href="mailto:adanobedperaltarojas@gmail.com">
-                adanobedperaltarojas@gmail.com
+                (adanobedperaltarojas@gmail.com)
               </a>
             </p>
           </div>

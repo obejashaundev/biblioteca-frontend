@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
+  LoaderFunctionArgs,
   redirect,
   RouterProvider,
 } from "react-router-dom";
@@ -15,6 +16,7 @@ import Layout from "./views/Shared/Layout";
 import Books from "./views/Books";
 import Home from "./views/Home";
 import axios from "axios";
+import Book from "./views/Books/Book";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
       </Layout>
     ),
     loader: protectedLoader,
+  },
+  {
+    path: "/books/edit/:id",
+    element: (
+      <Layout>
+        <Book />
+      </Layout>
+    ),
   },
 ]);
 
