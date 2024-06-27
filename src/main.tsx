@@ -17,6 +17,8 @@ import Books from "./views/Books";
 import Home from "./views/Home";
 import axios from "axios";
 import Book from "./views/Books/Book";
+import Persons from "./views/Persons";
+import Person from "./views/Persons/Person";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,25 @@ const router = createBrowserRouter([
         <Book />
       </Layout>
     ),
+    loader: protectedLoader,
+  },
+  {
+    path: "/persons",
+    element: (
+      <Layout>
+        <Persons />
+      </Layout>
+    ),
+    loader: protectedLoader,
+  },
+  {
+    path: "/persons/edit/:id",
+    element: (
+      <Layout>
+        <Person />
+      </Layout>
+    ),
+    loader: protectedLoader,
   },
 ]);
 
