@@ -33,7 +33,7 @@ export default function Login() {
       return false;
     }
     localStorage.setItem("token", response.data.token);
-    navigate("/books");
+    navigate("/home");
   }
 
   return (
