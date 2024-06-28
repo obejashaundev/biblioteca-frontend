@@ -5,19 +5,23 @@ import { FormEvent, ReactNode, useState } from "react";
 import FormField from "../../components/FormField";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import SelectBook from "../../components/SelectBook";
+import SelectPerson from "../../components/SelectPerson";
+import { useNavigate } from "react-router-dom";
 export default function Loans() {
   const api = process.env.VITE_APP_API_URL;
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [cellPhone, setCellphone] = useState("");
+  const [returnDate, setReturnDate] = useState("");
+  const [bookId, setBookId] = useState(0);
+  const [personId, setPersonId] = useState(0);
+  const navigator = useNavigate();
   async function handleSubmitNewPerson(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     event.stopPropagation();
-    const url = `${api}/booksLoans/add`;
+    const url = `${api}/BooksLoans/add`;
     const data = {
-      fullName,
-      email,
-      cellPhone,
+      bookId,
+      personId,
+      returnDate,
     };
     const token = localStorage.getItem("token");
     const response = await toast.promise(
@@ -36,6 +40,15 @@ export default function Loans() {
       toast.error(`${response.data.message}`);
       return false;
     }
+    navigator("/booksLoans", {
+      replace: true,
+    });
+  }
+  function handleChangeBook(optionSelected: null) {
+    if (optionSelected) setBookId(parseInt(optionSelected.value));
+  }
+  function handleChangePerson(optionSelected: null) {
+    if (optionSelected) setPersonId(parseInt(optionSelected.value));
   }
   return (
     <>
@@ -52,47 +65,33 @@ export default function Loans() {
                 formFields={
                   new Array<ReactNode>(
                     (
+                      <SelectBook
+                        labelText="Select a book"
+                        handleChange={handleChangeBook}
+                      />
+                    ),
+                    (
+                      <SelectPerson
+                        labelText="Select a person"
+                        handleChange={handleChangePerson}
+                      />
+                    ),
+                    (
                       <FormField
                         key={1}
-                        inputId="fullName"
-                        inputName="fullName"
-                        inputType="text"
-                        labelText="Full name"
+                        inputId="returnDate"
+                        inputName="returnDate"
+                        inputType="date"
+                        labelText="Return Date"
                         isRequired={true}
-                        placeholder="Full name"
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                      />
-                    ),
-                    (
-                      <FormField
-                        key={2}
-                        inputId="Email"
-                        inputName="Email"
-                        inputType="text"
-                        labelText="Email"
-                        isRequired={true}
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    ),
-                    (
-                      <FormField
-                        key={3}
-                        inputId="Cellphone"
-                        inputName="Cellphone"
-                        inputType="tel"
-                        labelText="Cellphone"
-                        isRequired={true}
-                        placeholder="Cellphone"
-                        value={cellPhone}
-                        onChange={(e) => setCellphone(e.target.value)}
+                        placeholder="Return Date"
+                        value={returnDate}
+                        onChange={(e) => setReturnDate(e.target.value)}
                       />
                     )
                   )
                 }
-                title="Add a new loan"
+                title="New book loan"
                 buttonSubmitText="Save"
                 handleSubmit={handleSubmitNewPerson}
               />

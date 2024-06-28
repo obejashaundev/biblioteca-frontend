@@ -46,7 +46,7 @@ export default function FormField({
           type={inputType}
           id={inputId}
           name={inputName}
-          value={value ? value : minValue}
+          value={value}
           min={minValue}
           onClick={onClick}
           onFocus={onFocus}

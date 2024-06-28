@@ -29,6 +29,7 @@ export default function Book() {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(response.data);
         setBook(response.data);
         setLoading(false);
       } catch (error) {

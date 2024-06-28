@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowUturnLeftIcon,
+  PencilIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -14,21 +18,22 @@ export default function LoansList() {
   const [pending, setPending] = React.useState(true);
   const navigate = useNavigate();
   useEffect(() => {
-    async function handleEditClick(id: number) {
-      navigate(`/booksLoans/edit/${id}`, { replace: true });
-    }
-    async function handleDeleteClick(id: number) {
+    async function handleReturnClick(id: number) {
       const isConfirmed = confirm("¿Are you sure to make this action?");
       if (isConfirmed) {
         const api = process.env.VITE_APP_API_URL;
-        const url = `${api}/booksLoans/${id}`;
+        const url = `${api}/booksLoans/${id}/return`;
         const token = localStorage.getItem("token");
         const response = await toast.promise(
-          axios.delete(url, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
+          axios.patch(
+            url,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          ),
           {
             pending: "Processing...",
             success: "👌",
@@ -68,6 +73,11 @@ export default function LoansList() {
           sortable: true,
         },
         {
+          name: "Book Title",
+          selector: (row) => row.title,
+          sortable: true,
+        },
+        {
           name: "Options",
           selector: (row) => row.id,
           cell: (row) => {
@@ -77,21 +87,11 @@ export default function LoansList() {
                   type="button"
                   className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-yellow-500 hover:text-yellow-700 focus:relative"
                   onClick={() => {
-                    handleEditClick(row.id);
+                    handleReturnClick(row.id);
                   }}
                 >
-                  <PencilIcon className="h-4 w-4" />
-                  Edit
-                </button>
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-red-500 hover:text-red-700 focus:relative"
-                  onClick={() => {
-                    handleDeleteClick(row.id);
-                  }}
-                >
-                  <TrashIcon className="h-4 w-4" />
-                  Delete
+                  <ArrowUturnLeftIcon className="h-4 w-4" />
+                  Return book
                 </button>
               </>
             );

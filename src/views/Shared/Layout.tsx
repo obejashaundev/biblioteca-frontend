@@ -80,7 +80,7 @@ export default function Layout({ children }: Props) {
 
                 <li>
                   <button
-                    onClick={() => navigate("/loans")}
+                    onClick={() => navigate("/booksLoans")}
                     className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                   >
                     <CalendarIcon className="size-5 opacity-75" />

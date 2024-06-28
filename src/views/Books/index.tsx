@@ -5,11 +5,13 @@ import { FormEvent, ReactNode, useState } from "react";
 import FormField from "../../components/FormField";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 export default function Books() {
   const api = process.env.VITE_APP_API_URL;
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [copies, setCopies] = useState(0);
+  const navigator = useNavigate();
   async function handleSubmitNewBook(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     event.stopPropagation();
@@ -36,6 +38,7 @@ export default function Books() {
       toast.error(`${response.data.message}`);
       return false;
     }
+    navigator("/books", { replace: true });
   }
   return (
     <>
