@@ -19,6 +19,8 @@ import axios from "axios";
 import Book from "./views/Books/Book";
 import Persons from "./views/Persons";
 import Person from "./views/Persons/Person";
+import Loans from "./views/Loans";
+import Loan from "./views/Loans/Loan";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,24 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <Book />
+      </Layout>
+    ),
+    loader: protectedLoader,
+  },
+  {
+    path: "/booksLoans",
+    element: (
+      <Layout>
+        <Loans />
+      </Layout>
+    ),
+    loader: protectedLoader,
+  },
+  {
+    path: "/booksLoans/edit/:id",
+    element: (
+      <Layout>
+        <Loan />
       </Layout>
     ),
     loader: protectedLoader,
